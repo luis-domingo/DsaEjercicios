@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <title>WebsiteBootstrapJQuery</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <h2><DIV ALIGN=center>GITHUB INFORMATION</DIV></h2>
+      <p>With this simple website I can show you the repositories of a github user</p>
+      <form>
+        <div class="form-group">
+          <label for="usr">Name of the github user:</label>
+          <input type="text" class="form-control" id="usr">
+          <button type="button" class="btn btn-info">Search</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="container">
+      <p>Repositories of the selected user:</p>
+      <table class="table">
+        <thread>
+          <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Stargazers</th>
+          </tr>
+        </thread>
+      </table>
+    </div>
+  </body>
+
+  <script>
+    $(document).ready(function(){
+      $("button").click(function(){
+        $("#table").empty();
+        $.getJSON("https://api.github.com/users/"+$("#usr").val()+"/repos",function(result){
+          console.log(JSON.stringify(result));   
+          $.each(result, function(i,field){
+            $("tbody").append("<tr><td>"+field.name+"</td><td>"+field.description+"</td><td>"+field.stargazers_count+"</td>")
+          });
+        $("#table").show();
+        });
+      });
+    });
+  </script>
+</html>
+
